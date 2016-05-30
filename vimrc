@@ -1,5 +1,3 @@
-
-
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -55,11 +53,12 @@ runtime macros/matchit.vim
 let mapleader = ","
 syntax enable
 set t_Co=256
-noremap d h
-noremap h j
-noremap t k
-noremap s l
-colorscheme last256
+"noremap d h
+"noremap h j
+"noremap t k
+"noremap s l
+set background=dark
+colorscheme sorcerer
 set fdm=syntax
 set hls
 set list
@@ -68,7 +67,6 @@ set list
 nmap <leader>l :set list!<CR>
 
 " Use the same symbols as TextMate for tabstops and EOLs
-"set listchars=tab:▸\
 set listchars=tab:▸\ ,eol:¬
 "Invisible character colors 
 highlight NonText guifg=#4a4a59
@@ -112,3 +110,5 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
+" Status line
+"set stl=%{fugitive#statusline()}
