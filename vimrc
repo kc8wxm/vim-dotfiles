@@ -1,3 +1,5 @@
+set nocompatible              " be iMproved, required
+
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -71,7 +73,11 @@ set listchars=tab:▸\ ,eol:¬
 "Invisible character colors 
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
-"set runtimepath+=/home/steven/Development/VimLPrimerBook/mpc
+set ts=4 sts=4 sw=4 expandtab autoindent
+set spell
+set number
+set autoindent ts=4 sts=4 sw=4
+autocmd FileType * set expandtab
 
 " Source the vimrc file after saving it
 if has("autocmd")
@@ -80,15 +86,19 @@ endif
 
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
-set number
-set autoindent ts=4 sts=4 sw=4
-autocmd FileType * set noexpandtab
+
 set mouse=a
 set ttyfast 
+set ttymouse=xterm2
 set clipboard=unnamed
 map <C-n> :NERDTreeToggle<CR>
 " map F12 to re-syntax the file
 map <F12> <ESC>:syntax sync fromstart<CR>
+" mapping for Tabularize
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a: :Tabularize /:\zs<CR>
+vmap <Leader>a: :Tabularize /:\zs<CR>
 " mapping for Fugitive
 map <leader>gs :Gstatus<CR>
 map <leader>gd :Gdiff<CR>
@@ -110,5 +120,11 @@ noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
 
-" Status line
-"set stl=%{fugitive#statusline()}
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
