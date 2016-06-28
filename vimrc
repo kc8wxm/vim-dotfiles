@@ -35,6 +35,10 @@ Plugin 'spf13/PIV'
 Plugin 'craigemery/vim-autotag'
 Plugin 'vimwiki/vimwiki'
 Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'bling/vim-bufferline'
+Plugin 'majutsushi/tagbar'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -90,7 +94,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 set mouse=a
 set ttyfast 
 set ttymouse=xterm2
-set clipboard=unnamed
+" set clipboard=unnamed
 map <C-n> :NERDTreeToggle<CR>
 " map F12 to re-syntax the file
 map <F12> <ESC>:syntax sync fromstart<CR>
@@ -128,3 +132,13 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
+" Airline
+let g:airline_section_b = '%{strftime("%c")}'
+let g:airline_section_y = 'BN: %{bufnr("%")}'
+let g:airline#extensions#tabline#enabled = 1
+
+" Airline Themes
+let g:airline_theme='badwolf'
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
