@@ -31,7 +31,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'tpope/vim-abolish'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
-Plugin 'spf13/PIV'
+"Plugin 'spf13/PIV'
 Plugin 'craigemery/vim-autotag'
 Plugin 'vimwiki/vimwiki'
 Plugin 'scrooloose/nerdtree'
@@ -39,6 +39,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
+Plugin 'vim-scripts/phpfolding.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -65,7 +66,7 @@ set t_Co=256
 "noremap s l
 set background=dark
 colorscheme sorcerer
-set fdm=syntax
+" set fdm=syntax
 set hls
 set list
 
@@ -118,6 +119,7 @@ map <leader>n <esc>:tabnext<CR>
 " easier moving of code blocks
 vnoremap < <gv " better indentation
 vnoremap > >gv " better indentation
+
 " Disable the arrow keys
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -133,12 +135,18 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 " Airline
-let g:airline_section_b = '%{strftime("%c")}'
-let g:airline_section_y = 'BN: %{bufnr("%")}'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline_powerline_fonts = 1
 
 " Airline Themes
 let g:airline_theme='badwolf'
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
+
+" Disable php folding
+"let g:DisableAutoPHPFolding = 1
+let php_folding=0
+map <F5> <Esc>:EnableFastPHPFolds<Cr>
+map <F6> <Esc>:EnablePHPFolds<Cr>
+map <F7> <Esc>:DisablePHPFolds<Cr>
