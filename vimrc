@@ -150,3 +150,6 @@ let php_folding=0
 map <F5> <Esc>:EnableFastPHPFolds<Cr>
 map <F6> <Esc>:EnablePHPFolds<Cr>
 map <F7> <Esc>:DisablePHPFolds<Cr>
+
+" Auto strip trailing whitespaces
+autocmd BufWritePre * %s/\s\+$//e
