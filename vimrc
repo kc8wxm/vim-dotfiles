@@ -40,6 +40,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-scripts/phpfolding.vim'
+Plugin 'pangloss/vim-javascript'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -75,7 +76,7 @@ nmap <leader>l :set list!<CR>
 
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
-"Invisible character colors 
+"Invisible character colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 set ts=4 sts=4 sw=4 expandtab autoindent
@@ -93,7 +94,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 
 set mouse=a
-set ttyfast 
+set ttyfast
 set ttymouse=xterm2
 " set clipboard=unnamed
 map <C-n> :NERDTreeToggle<CR>
@@ -153,3 +154,9 @@ map <F7> <Esc>:DisablePHPFolds<Cr>
 
 " Auto strip trailing whitespaces
 autocmd BufWritePre * %s/\s\+$//e
+
+" setup vim-javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_flow = 1
+set foldmethod=syntax
+
