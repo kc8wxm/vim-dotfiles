@@ -18,16 +18,19 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 Plugin 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+"Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 " Plugin 'file:///home/gmarik/path/to/plugin'
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
+"
+"
 Plugin 'SirVer/ultisnips'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-abolish'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
@@ -39,8 +42,12 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'freitass/todo.txt-vim'
+Plugin 'tmux-plugins/vim-tmux'
+"Plugin 'nelstrom/vim-qargs'
 "Plugin 'vim-scripts/phpfolding.vim'
-Plugin 'pangloss/vim-javascript'
+"Plugin 'pangloss/vim-javascript'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -70,6 +77,7 @@ colorscheme sorcerer
 " set fdm=syntax
 set hls
 set list
+set hidden
 
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
@@ -82,7 +90,7 @@ highlight SpecialKey guifg=#4a4a59
 set ts=4 sts=4 sw=4 expandtab autoindent
 set spell
 set number
-set autoindent ts=4 sts=4 sw=4
+" set autoindent ts=4 sts=4 sw=4
 autocmd FileType * set expandtab
 
 " Source the vimrc file after saving it
@@ -95,7 +103,9 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 set mouse=a
 set ttyfast
-set ttymouse=xterm2
+if !has('nvim')
+    set ttymouse=xterm2
+endif
 " set clipboard=unnamed
 map <C-n> :NERDTreeToggle<CR>
 " map F12 to re-syntax the file
@@ -129,11 +139,13 @@ noremap <Right> <NOP>
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsListSnippets="<c-s-tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+let g:UltiSnipsEditSplit="horizontal"
 
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+" You Complete Me
+"let g:ycm_key_list_select_completion = ['<TAB>', '<Enter>']
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -159,4 +171,16 @@ autocmd BufWritePre * %s/\s\+$//e
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
 set foldmethod=syntax
+command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
+function! QuickfixFilenames()
+  " Building a hash ensures we get each buffer only once
+  let buffer_numbers = {}
+  for quickfix_item in getqflist()
+    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
+  endfor
+  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
+endfunction
 
+" For saving folding for files
+"autocmd BufWinLeave *.* mkview!
+"autocmd BufWinEnter *.* silent loadview
