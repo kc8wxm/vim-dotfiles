@@ -16,7 +16,7 @@ Plugin 'VundleVim/Vundle.vim'
 " plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-Plugin 'L9'
+"Plugin 'L9'
 " Git plugin not hosted on GitHub
 "Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
@@ -27,15 +27,12 @@ Plugin 'L9'
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-"
-"
 Plugin 'SirVer/ultisnips'
 "Plugin 'Valloric/YouCompleteMe'
+Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-abolish'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'godlygeek/tabular'
-Plugin 'spf13/PIV'
-Plugin 'craigemery/vim-autotag'
 Plugin 'vimwiki/vimwiki'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
@@ -44,10 +41,41 @@ Plugin 'bling/vim-bufferline'
 Plugin 'majutsushi/tagbar'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'freitass/todo.txt-vim'
-Plugin 'tmux-plugins/vim-tmux'
+"Plugin 'tmux-plugins/vim-tmux'
 "Plugin 'nelstrom/vim-qargs'
 "Plugin 'vim-scripts/phpfolding.vim'
 "Plugin 'pangloss/vim-javascript'
+"Plugin 'vim-scripts/smarty.vim'
+Plugin 'leafgarland/typescript-vim'
+"Plugin 'airblade/vim-gitgutter'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'mileszs/ack.vim'
+Plugin 'tpope/vim-unimpaired'
+"Plugin 'benmills/vimux'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'tpope/vim-surround'
+"Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-markdown'
+Plugin 'dsawardekar/wordpress.vim'
+Plugin 'tyru/open-browser.vim'
+Plugin 'spf13/piv'
+"Plugin 'StanAngeloff/php.vim'
+"Plugin 'shawncplus/phpcomplete.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'ap/vim-css-color'
+"Plugin 'tpope/vim-vinegar'
+"Plugin 'mhinz/vim-startify'
+Plugin 'kshenoy/vim-signature'
+Plugin 'nono/jquery.vim'
+"Plugin 'c.vim'
+Plugin 'alvan/vim-closetag'
+Plugin 'shutnik/jshint2.vim'
+"Plugin 'mtth/scratch.vim'
+"Plugin 'ryanoasis/vim-devicons'
+"Plugin 'taglist.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -66,6 +94,7 @@ runtime macros/matchit.vim
 " Put your non-Plugin stuff after this line
 
 let mapleader = ","
+set encoding=utf8
 syntax enable
 set t_Co=256
 "noremap d h
@@ -77,21 +106,24 @@ colorscheme sorcerer
 " set fdm=syntax
 set hls
 set list
-set hidden
+" set grepprg=ack\ --nogroup\ $*
 
+set nowritebackup
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
 " Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ ,eol:¬,trail:·
+set hidden
 "Invisible character colors
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 set ts=4 sts=4 sw=4 expandtab autoindent
 set spell
 set number
-" set autoindent ts=4 sts=4 sw=4
+set autoindent ts=4 sts=4 sw=4
 autocmd FileType * set expandtab
+autocmd FileType make set noexpandtab
 
 " Source the vimrc file after saving it
 if has("autocmd")
@@ -136,16 +168,20 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+" Disable the arrow keys in insert mode
+"inoremap <Up> <NOP>
+"inoremap <Down> <NOP>
+"inoremap <Left> <NOP>
+"inoremap <Right> <NOP>
 
-" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsListSnippets="<c-s-tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-j>"
-let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" Set F9 for make
+:map <f9> :make
+
+" If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="horizontal"
 
-" You Complete Me
-"let g:ycm_key_list_select_completion = ['<TAB>', '<Enter>']
+" Prevent UltiSnips from removing our carefully-crafted mappings.
+let g:UltiSnipsMappingsToIgnore = ['autocomplete']
 
 " Airline
 let g:airline#extensions#tabline#enabled = 1
@@ -159,28 +195,69 @@ nmap <F8> :TagbarToggle<CR>
 
 " Disable php folding
 "let g:DisableAutoPHPFolding = 1
-let php_folding=0
-map <F5> <Esc>:EnableFastPHPFolds<Cr>
-map <F6> <Esc>:EnablePHPFolds<Cr>
-map <F7> <Esc>:DisablePHPFolds<Cr>
+"let php_folding=0
+"map <F5> <Esc>:EnableFastPHPFolds<Cr>
+"map <F6> <Esc>:EnablePHPFolds<Cr>
+"map <F7> <Esc>:DisablePHPFolds<Cr>
 
 " Auto strip trailing whitespaces
 autocmd BufWritePre * %s/\s\+$//e
 
 " setup vim-javascript
-let g:javascript_plugin_jsdoc = 1
-let g:javascript_plugin_flow = 1
-set foldmethod=syntax
-command! -nargs=0 -bar Qargs execute 'args' QuickfixFilenames()
-function! QuickfixFilenames()
-  " Building a hash ensures we get each buffer only once
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(map(values(buffer_numbers), 'fnameescape(v:val)'))
-endfunction
+"let g:javascript_plugin_jsdoc = 1
+"let g:javascript_plugin_flow = 1
+"set foldmethod=syntax
 
+" set *.html for smarty templates
+" au BufNewFile,BufRead *.html set filetype=smarty
 " For saving folding for files
 "autocmd BufWinLeave *.* mkview!
 "autocmd BufWinEnter *.* silent loadview
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger = '<Tab>'
+let g:UltiSnipsJumpForwardTrigger = '<Tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<S-Tab>'
+
+" Prevent UltiSnips from removing our carefully-crafted mappings.
+let g:UltiSnipsMappingsToIgnore = ['autocomplete']
+
+"let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+"let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+"let g:ycm_key_list_accept_completion = ['<C-y>']
+"let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" Additional UltiSnips config.
+let g:UltiSnipsSnippetsDir = '~/.vim/UltiSnips'
+let g:UltiSnipsSnippetDirectories = ['UltiSnips']
+
+" Additional YouCompleteMe config.
+"let g:ycm_complete_in_comments = 1
+"let g:ycm_collect_identifiers_from_comments_and_strings = 1
+"let g:ycm_seed_identifiers_with_syntax = 1
+"let g:ycm_auto_trigger = 1
+
+" For ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+" For vim-markdown
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+
+" Open a new tab an search for something.
+nmap <leader>a :tab split<CR>:Ack ""<Left>
+
+" Immediately search for the word under the cursor in a new tab
+nmap <leader>A :tab split<CR>:Ack <C-r><C-w><CR>
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_php_checkers = ['php']
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
